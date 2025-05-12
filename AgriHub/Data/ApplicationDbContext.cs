@@ -15,10 +15,10 @@ namespace AgriHub.Data
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        /*protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             // Seed sample data here if needed
-        }
+        }*/
     }
 }

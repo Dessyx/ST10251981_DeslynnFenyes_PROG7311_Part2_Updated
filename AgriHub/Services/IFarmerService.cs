@@ -8,7 +8,7 @@ namespace AgriHub.Services
     public interface IFarmerService
     {
         Task<IEnumerable<Farmer>> GetAllFarmersAsync();
-        Task<Farmer> GetFarmerByIdAsync(int id);
+        Task<Farmer> GetFarmerByUserIdAsync(string userId);
         Task AddFarmerAsync(Farmer farmer);
     }
 }

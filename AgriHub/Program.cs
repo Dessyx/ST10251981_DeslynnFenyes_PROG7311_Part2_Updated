@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AgriHub.Data;
+using AgriHub.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,16 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()  // Add Identity serv
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultTokenProviders();
 
+// Register services
+builder.Services.AddScoped<IFarmerService, FarmerService>();
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await DatabaseSeeder.SeedUsersAndRoles(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -30,12 +40,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AgriEnergy_Hub.Services
+namespace AgriHub.Services
 {
     public interface IProductService
     {

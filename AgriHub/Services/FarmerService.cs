@@ -27,6 +27,13 @@ namespace AgriHub.Services
                 .FirstOrDefaultAsync(f => f.FarmerId == id); 
         }
 
+        public async Task<Farmer> GetFarmerByUserIdAsync(string userId)
+        {
+            return await _context.Farmers
+                .Include(f => f.Products)
+                .FirstOrDefaultAsync(f => f.UserId == userId);
+        }
+
 
         public async Task AddFarmerAsync(Farmer farmer)
         {

@@ -9,25 +9,35 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace AgriEnergy_Hub.Controllers
+namespace AgriHub.Controllers
 {
     [Authorize]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        private readonly UserManager<ApplicationUser> _userManager;
-        public ProductController(IProductService productService, UserManager<ApplicationUser> userManager)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IFarmerService _farmerService;
+
+        public ProductController(
+            IProductService productService, 
+            UserManager<IdentityUser> userManager,
+            IFarmerService farmerService)
         {
             _productService = productService;
             _userManager = userManager;
+            _farmerService = farmerService;
         }
 
         [Authorize(Roles = "Farmer")]
         public async Task<IActionResult> MyProducts()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user?.FarmerId == null) return Unauthorized();
-            var products = await _productService.GetProductsByFarmerAsync(user.FarmerId.Value);
+            if (user == null) return Unauthorized();
+
+            var farmer = await _farmerService.GetFarmerByUserIdAsync(user.Id);
+            if (farmer == null) return Unauthorized();
+
+            var products = await _productService.GetProductsByFarmerAsync(farmer.FarmerId);
             return View(products);
         }
 
@@ -42,10 +52,14 @@ namespace AgriEnergy_Hub.Controllers
         public async Task<IActionResult> AddProduct(Product product)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user?.FarmerId == null) return Unauthorized();
+            if (user == null) return Unauthorized();
+
+            var farmer = await _farmerService.GetFarmerByUserIdAsync(user.Id);
+            if (farmer == null) return Unauthorized();
+
             if (ModelState.IsValid)
             {
-                product.FarmerId = user.FarmerId.Value;
+                product.FarmerId = farmer.FarmerId;
                 await _productService.AddProductAsync(product);
                 return RedirectToAction("MyProducts");
             }
