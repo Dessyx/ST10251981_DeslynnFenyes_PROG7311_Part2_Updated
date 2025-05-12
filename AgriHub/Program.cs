@@ -8,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Register services
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IFarmerService, FarmerService>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(Options =>
 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -15,8 +19,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()  // Add Identity serv
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultTokenProviders();
 
-// Register services
-builder.Services.AddScoped<IFarmerService, FarmerService>();
+
 
 var app = builder.Build();
 
