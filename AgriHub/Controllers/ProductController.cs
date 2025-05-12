@@ -8,6 +8,8 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using AgriHub.Data;
 
 namespace AgriHub.Controllers
 {
@@ -17,15 +19,18 @@ namespace AgriHub.Controllers
         private readonly IProductService _productService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IFarmerService _farmerService;
+        private readonly ApplicationDbContext _context;
 
         public ProductController(
             IProductService productService, 
             UserManager<IdentityUser> userManager,
-            IFarmerService farmerService)
+            IFarmerService farmerService,
+            ApplicationDbContext context)
         {
             _productService = productService;
             _userManager = userManager;
             _farmerService = farmerService;
+            _context = context;
         }
 
         [Authorize(Roles = "Farmer")]
@@ -71,6 +76,31 @@ namespace AgriHub.Controllers
         {
             var products = await _productService.FilterProductsAsync(farmerId, category, from, to);
             return View(products);
+        }
+
+        public async Task<IActionResult> Filter(ProductFilterViewModel filter)
+        {
+            var query = _context.Products
+                .Include(p => p.Farmer)
+                .AsQueryable();
+
+            if (filter.StartDate.HasValue)
+            {
+                query = query.Where(p => p.ProductionDate >= filter.StartDate.Value);
+            }
+
+            if (filter.EndDate.HasValue)
+            {
+                query = query.Where(p => p.ProductionDate <= filter.EndDate.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Category))
+            {
+                query = query.Where(p => p.Category.Contains(filter.Category));
+            }
+
+            filter.Products = await query.ToListAsync();
+            return View(filter);
         }
     }
 }

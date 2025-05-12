@@ -7,7 +7,10 @@
 
 
 <h1>Farmers</h1>
-<a class="btn btn-success mb-3" asp-action="AddFarmer">Add New Farmer</a>
+<div class="mb-3">
+    <a class="btn btn-success" asp-action="AddFarmer">Add New Farmer</a>
+    <a class="btn btn-primary" asp-controller="Product" asp-action="Filter">Filter Products</a>
+</div>
 
 <table class="styled-table">
     <thead>

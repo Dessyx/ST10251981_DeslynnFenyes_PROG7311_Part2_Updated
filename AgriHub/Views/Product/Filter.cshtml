@@ -1,0 +1,74 @@
+@model AgriHub.Models.ProductFilterViewModel
+@{
+    ViewData["Title"] = "Filter Products";
+}
+
+<link rel="stylesheet" href="~/css/Dashboard.css" />
+
+<div class="container">
+    <h1>Filter Products</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="Filter" method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="StartDate" class="control-label"></label>
+                            <input asp-for="StartDate" class="form-control" type="date" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="EndDate" class="control-label"></label>
+                            <input asp-for="EndDate" class="form-control" type="date" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Category" class="control-label"></label>
+                            <input asp-for="Category" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                    <a asp-action="Filter" class="btn btn-secondary">Clear Filters</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.Products.Any())
+    {
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Production Date</th>
+                        <th>Farmer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Products)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Category</td>
+                            <td>@product.ProductionDate.ToShortDateString()</td>
+                            <td>@product.Farmer?.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No products found matching your criteria.
+        </div>
+    }
+</div> 
