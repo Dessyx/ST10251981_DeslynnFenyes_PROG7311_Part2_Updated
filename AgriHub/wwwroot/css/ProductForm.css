@@ -1,97 +1,92 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
+﻿/* productForm.css */
 
+/* Form Container */
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+/* Background Gradient for the Page */
 body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    background: linear-gradient(to right, lightgreen, deepskyblue);
+    font-family: Arial, sans-serif;
+    color: black;
+}
+
+/* Flexbox Layout for Left and Right Sections */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Left Column */
+.left-column {
+    width: 48%;
+}
+
+/* Right Column */
+.right-column {
+    width: 48%;
+}
+
+/* Form Inputs and Textarea */
+.form-control {
+    margin-bottom: 15px;
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+/* Labels */
+label {
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Button Styling */
+.btn-success {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+}
+
+    .btn-success:hover {
+        background: linear-gradient(to right, green, deepskyblue);
+        color: black;
+        box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+    }
+
+/* Center Submit Button */
+.submit-button-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(45deg, greenyellow, dodgerblue);
-    font-family: "Sansita Swashed", cursive;
+    margin-top: 20px;
 }
 
-.center {
-    position: relative;
-    width: 600px; 
-    padding: 50px 50px; 
-    background: #fff;
-    border-radius: 10px;
+h1 {
+    color: black;
     text-align: center;
+    font-family: 'Lucida Handwriting', cursive;
+    font-size: 2.5em;
+    margin: 0;
+    padding-bottom: 30px;
 }
 
-
-    .center h1 {
-        font-size: 2em;
-        border-left: 5px solid dodgerblue;
-        padding: 10px;
-        color: #000;
-        letter-spacing: 5px;
-        margin-bottom: 60px;
-        font-weight: bold;
-        padding-left: 10px;
-    }
-
-    .center .inputbox {
-        position: relative;
-        width: 300px;
-        height: 50px;
-        margin: 0 auto 30px auto;
-    }
-
-        .center .inputbox input[type="text"],
-        .center .inputbox input[type="date"],
-        .center .inputbox input[type="submit"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            border: 2px solid #000;
-            outline: none;
-            background: none;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 1.2em;
-        }
-
-        .center .inputbox span {
-            position: absolute;
-            top: 14px;
-            left: 20px;
-            font-size: 1em;
-            transition: 0.6s;
-            font-family: sans-serif;
-        }
-
-        .center .inputbox input:focus ~ span,
-        .center .inputbox input:valid ~ span {
-            transform: translateX(-13px) translateY(-35px);
-            font-size: 1em;
-        }
-
-        .center .inputbox input[type="submit"] {
-            width: 100%;
-            background: dodgerblue;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-            .center .inputbox input[type="submit"]:hover {
-                background: linear-gradient(45deg, greenyellow, dodgerblue);
-            }
-
-.btn-secondary {
-    display: inline-block;
-    padding: 10px 20px;
-    background: grey;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    transition: background 0.3s ease;
+.form-header-image {
+    max-width: 200px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-
-    .btn-secondary:hover {
-        background: #444;
-    }
