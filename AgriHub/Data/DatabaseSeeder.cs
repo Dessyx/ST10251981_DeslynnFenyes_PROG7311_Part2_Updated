@@ -48,8 +48,8 @@ namespace AgriHub.Data
                         Email = farmerUser.Email,
                         Phone = "1234567890"
                     };
-                    context.Farmers.Add(farmer);
-                    await context.SaveChangesAsync();
+                   /* context.Farmers.Add(farmer);
+                    await context.SaveChangesAsync();*/
                 }
             }
             //------------------------------------------------------------------------------

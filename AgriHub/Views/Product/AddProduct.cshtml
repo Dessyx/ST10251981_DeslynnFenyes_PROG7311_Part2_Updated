@@ -3,7 +3,7 @@
     ViewData["Title"] = "Add Product";
 }
 <h2>Add Product</h2>
-<form asp-action="Add" method="post">
+<form asp-controller="Product" asp-action="AddProduct" method="post">
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
         <input asp-for="Name" class="form-control" />
@@ -21,4 +21,8 @@
     </div>
     <button type="submit" class="btn btn-primary">Add Product</button>
     <a asp-action="MyProducts" class="btn btn-secondary">Cancel</a>
-</form> 
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

@@ -1,9 +1,12 @@
-﻿namespace AgriHub.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AgriHub.Models.Entities
 {
     public class Farmer
     {
+        [Key]
         public int FarmerId { get; set; }
-        public string UserId { get; set; }  // This will store the IdentityUser.Id
+        public string UserId { get; set; }  
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

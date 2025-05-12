@@ -20,12 +20,12 @@ namespace AgriHub.Services
             return await _context.Farmers.Include(f => f.Products).ToListAsync();
         }
 
-        public async Task<Farmer> GetFarmerByIdAsync(int id)
+       /* public async Task<Farmer> GetFarmerByIdAsync(int id)
         {
             return await _context.Farmers
                 .Include(f => f.Products)
                 .FirstOrDefaultAsync(f => f.FarmerId == id); 
-        }
+        }*/
 
         public async Task<Farmer> GetFarmerByUserIdAsync(string userId)
         {
