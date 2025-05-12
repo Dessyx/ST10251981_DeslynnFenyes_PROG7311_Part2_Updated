@@ -4,11 +4,11 @@ using System.Reflection.Emit;
 using AgriHub.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace AgriHub.Data
 {
-    
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Farmer> Farmers { get; set; }
         public DbSet<Product> Products { get; set; }

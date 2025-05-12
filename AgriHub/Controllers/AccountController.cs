@@ -8,10 +8,10 @@ namespace AgriHub.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -33,8 +33,8 @@ namespace AgriHub.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(model.Email);
-                    var roles = await _userManager.GetRolesAsync(user);
-                    var role = roles.FirstOrDefault();
+                    var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
                     if (role == "Employee")
                     {
                         return RedirectToAction("Index", "Farmer");
