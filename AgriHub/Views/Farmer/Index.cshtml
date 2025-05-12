@@ -2,9 +2,14 @@
 @{
     ViewData["Title"] = "Farmers";
 }
-<h2>Farmers</h2>
+
+<link rel="stylesheet" href="~/css/Dashboard.css" />
+
+
+<h1>Farmers</h1>
 <a class="btn btn-success mb-3" asp-action="AddFarmer">Add New Farmer</a>
-<table class="table table-bordered table-striped">
+
+<table class="styled-table">
     <thead>
         <tr>
             <th>Name</th>
@@ -22,4 +27,4 @@
             </tr>
         }
     </tbody>
-</table> 
+</table>
