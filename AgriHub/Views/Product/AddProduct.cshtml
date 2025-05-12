@@ -1,0 +1,24 @@
+﻿@model AgriHub.Models.Entities.Product
+@{
+    ViewData["Title"] = "Add Product";
+}
+<h2>Add Product</h2>
+<form asp-action="Add" method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Category" class="form-label"></label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ProductionDate" class="form-label"></label>
+        <input asp-for="ProductionDate" class="form-control" type="date" />
+        <span asp-validation-for="ProductionDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Product</button>
+    <a asp-action="MyProducts" class="btn btn-secondary">Cancel</a>
+</form> 

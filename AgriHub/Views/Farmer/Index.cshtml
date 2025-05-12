@@ -1,0 +1,25 @@
+﻿@model IEnumerable<AgriHub.Models.Entities.Farmer>
+@{
+    ViewData["Title"] = "Farmers";
+}
+<h2>Farmers</h2>
+<a class="btn btn-success mb-3" asp-action="Add">Add New Farmer</a>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var farmer in Model)
+        {
+            <tr>
+                <td>@farmer.Name</td>
+                <td>@farmer.Email</td>
+                <td>@farmer.Phone</td>
+            </tr>
+        }
+    </tbody>
+</table> 
