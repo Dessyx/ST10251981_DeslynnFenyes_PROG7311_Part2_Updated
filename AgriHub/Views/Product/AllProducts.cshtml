@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AgriHub.Models.Entities.Product>
+@{
+    ViewData["Title"] = "All Products";
+}
+<h2>All Products</h2>
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-3">
+        <input name="category" class="form-control" placeholder="Category" value="@Context.Request.Query["category"]" />
+    </div>
+    <div class="col-md-3">
+        <input name="from" class="form-control" type="date" value="@Context.Request.Query["from"]" />
+    </div>
+    <div class="col-md-3">
+        <input name="to" class="form-control" type="date" value="@Context.Request.Query["to"]" />
+    </div>
+    <div class="col-md-3">
+        <input name="farmerId" class="form-control" placeholder="Farmer Id" value="@Context.Request.Query["farmerId"]" />
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Production Date</th>
+            <th>Farmer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Category</td>
+                <td>@product.ProductionDate.ToShortDateString()</td>
+                <td>@product.Farmer?.Name</td>
+            </tr>
+        }
+    </tbody>
+</table> 
