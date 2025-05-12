@@ -1,0 +1,185 @@
+﻿
+
+.hide-navbar nav {
+    display: none;
+}
+
+
+/*<!-- Code taken from CodePen.io by Vincent Van Goggles-- >*/
+
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Quicksand", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #111;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+}
+
+.ring {
+    position: relative;
+    width: 650px;
+    height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+    .ring i {
+        position: absolute;
+        inset: 0;
+        border: 2px solid #fff;
+        transition: 0.5s;
+    }
+
+        .ring i:nth-child(1) {
+            border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+            animation: animate 6s linear infinite;
+        }
+
+        .ring i:nth-child(2) {
+            border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
+            animation: animate 4s linear infinite;
+        }
+
+        .ring i:nth-child(3) {
+            border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
+            animation: animate2 10s linear infinite;
+        }
+
+    .ring:hover i {
+        border: 6px solid var(--clr);
+        filter: drop-shadow(0 0 20px var(--clr));
+    }
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animate2 {
+    0% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.login {
+    position: relative;
+    width: 300px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    margin: auto;
+}
+
+    .login h2 {
+        font-size: 2em;
+        color: #fff;
+        font-family: 'Lucida Handwriting', cursive;
+        background: linear-gradient(to right, deepskyblue, #1458FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .login .inputBx {
+        position: relative;
+        width: 100%;
+    }
+
+        .login .inputBx input {
+            position: relative;
+            width: 100%;
+            padding: 20px 20px;
+            background: transparent;
+            border: 2px solid #fff;
+            border-radius: 40px;
+            font-size: 1.2em;
+            color: lightgray;
+            box-shadow: none;
+            outline: none;
+        }
+
+            .login .inputBx input[type="submit"] {
+                width: 100%;
+                background: linear-gradient(45deg, #148DFF #FF429E);
+                border: none;
+                cursor: pointer;
+            }
+
+            .login .inputBx input::placeholder {
+                color: lightgray;
+                opacity: 1;
+            }
+
+
+    .login .links {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+        .login .links a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+
+.submit-btn-link {
+    display: inline-block;
+    padding: 15px;
+    background-color: #148DFF;
+    color: white;
+    border-radius: 40px;
+    text-align: center;
+    font-size: 1.2em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+    .submit-btn-link:hover {
+        background-color: #0d6efd;
+        color: black;
+    }
+
+
+
+
+
+/*<!--
+Ends here-- >
+
+
+@* REFERENCES *@
+@* Goggles, V. V., 2024. Animated Login Form - CSS. [Online]
+Available at: https://www.codewithfaraz.com/article/126/30-login-form-collection-with-source-code-in-html-css-and-javascript
+[Accessed 23 April 2024]. *@*/

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="agrihub-hero">
+    <div class="agrihub-header d-flex align-items-center mb-4">
+        <img src="/Images/Logo.png" alt="AgriHub Logo" class="agrihub-logo me-2" style="width:60px; height:48px;" />
+        <span class="agrihub-title">AgriHub</span>
+    </div>
+    <div class="agrihub-main-content position-relative">
+        <div class="agrihub-illustration d-flex justify-content-center mb-4">
+            <img src="/Images/Landing.png" alt="Eco City" class="img-fluid rounded shadow" style="max-width: 500px;" />
+        </div>
+        <div class="agrihub-bubble agrihub-bubble-employees">
+            <span class="bubble-title">Employees</span><br />
+            Bring farmers onboard—create profiles today!<br />Find exactly what you need and filter products.
+        </div>
+        <div class="agrihub-bubble agrihub-bubble-farmers">
+            <span class="bubble-title">Farmers</span><br />
+            Upload your products in seconds!
+        </div>
+        <div class="agrihub-bubble agrihub-bubble-both">
+            <span class="bubble-title">Farmers and Employees</span><br />
+            Farmers: View & manage your listed products.<br />
+            Employees: Access and manage all farm products
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <button type="button" onclick="location.href='/Account/Login'" class="btn btn-dark btn-lg px-5 py-2">
+            Let's get started!
+        </button>
+    </div>
+
+</div>
+<footer class="agrihub-footer mt-5">
+    <div class="agrihub-footer-bar text-center py-4">
+        <span class="footer-slogan">Grow more, connect more – with AgriHub</span>
+    </div>
+</footer>

@@ -1,0 +1,140 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+/* AgriHub Custom Styles */
+.agrihub-hero {
+    background: white;
+    padding-bottom: 0;
+}
+
+.agrihub-header {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.agrihub-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.agrihub-logo {
+    border-radius: 10px;
+}
+
+.agrihub-main-content {
+    position: relative;
+    min-height: 400px;
+    margin-bottom: 2rem;
+}
+
+.agrihub-illustration {
+    z-index: 1;
+    position: relative;
+}
+
+.agrihub-bubble {
+    position: absolute;
+    background: #f3f6ed;
+    border-radius: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 1.2rem 1.5rem;
+    max-width: 320px;
+    font-size: 1.1rem;
+    color: #222;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+    .agrihub-bubble .bubble-title {
+        font-family: 'Pacifico', cursive, Arial, sans-serif;
+        color: #6bbf4e;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+.agrihub-bubble-employees {
+    top: 40px;
+    left: -40px;
+}
+
+.agrihub-bubble-farmers {
+    top: 0;
+    right: -30px;
+}
+
+.agrihub-bubble-both {
+    bottom: 10px;
+    right: 10px;
+}
+
+.agrihub-footer-bar {
+    background: linear-gradient(90deg, #7ec850 0%, #4e9f3d 100%);
+    color: #fff;
+    border-radius: 0 0 30px 30px;
+}
+
+.footer-slogan {
+    font-family: 'Pacifico', cursive, Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+    .agrihub-bubble-employees {
+        left: 0;
+        top: 10px;
+    }
+
+    .agrihub-bubble-farmers {
+        right: 0;
+        top: 0;
+    }
+
+    .agrihub-bubble-both {
+        right: 0;
+        bottom: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .agrihub-main-content {
+        min-height: 300px;
+    }
+
+    .agrihub-bubble {
+        position: static;
+        margin: 1rem auto;
+        display: block;
+    }
+
+    .agrihub-illustration img {
+        max-width: 100%;
+    }
+
+    .footer-slogan {
+        font-size: 1.2rem;
+    }
+}
