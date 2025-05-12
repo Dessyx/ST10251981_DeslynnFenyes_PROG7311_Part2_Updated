@@ -2,27 +2,40 @@
 @{
     ViewData["Title"] = "Add Product";
 }
-<h2>Add Product</h2>
-<form asp-controller="Product" asp-action="AddProduct" method="post">
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Category" class="form-label"></label>
-        <input asp-for="Category" class="form-control" />
-        <span asp-validation-for="Category" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="ProductionDate" class="form-label"></label>
-        <input asp-for="ProductionDate" class="form-control" type="date" />
-        <span asp-validation-for="ProductionDate" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Add Product</button>
-    <a asp-action="MyProducts" class="btn btn-secondary">Cancel</a>
-</form>
+<link rel="stylesheet" href="~/css/productForm.css" />
+
+<div class="center">
+    <h1>Add Product</h1>
+    <form asp-controller="Product" asp-action="AddProduct" method="post">
+        <div class="inputbox">
+            <input asp-for="Name" required="required" />
+            <span>Product Name</span>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="inputbox">
+            <input asp-for="Category" required="required" />
+            <span>Category</span>
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+
+        <div class="inputbox">
+            <input asp-for="ProductionDate" type="date" required="required" />
+            <span>Production Date</span>
+            <span asp-validation-for="ProductionDate" class="text-danger"></span>
+        </div>
+
+        <div class="inputbox">
+            <input type="submit" value="Add Product" />
+        </div>
+        <div class="inputbox">
+            <a asp-action="MyProducts" class="btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-} 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
