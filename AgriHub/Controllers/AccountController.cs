@@ -11,16 +11,15 @@ namespace AgriHub.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<AccountController> _logger;
+ 
 
         public AccountController(
             SignInManager<IdentityUser> signInManager, 
-            UserManager<IdentityUser> userManager,
-            ILogger<AccountController> logger)
+            UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _logger = logger;
+         
         }
 
         [HttpGet]
@@ -35,12 +34,12 @@ namespace AgriHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                _logger.LogInformation("Login attempt for user: {Email}", model.Email);
+          
 
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
-                    _logger.LogWarning("Login failed: User not found for email: {Email}", model.Email);
+                    
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
@@ -54,7 +53,7 @@ namespace AgriHub.Controllers
                     // Verify if this is the predefined employee account
                     if (model.Email != "employee1@agri.com")
                     {
-                        _logger.LogWarning("Login failed: Invalid employee email: {Email}", model.Email);
+                     
                         ModelState.AddModelError(string.Empty, "Invalid employee login attempt.");
                         return View(model);
                     }
@@ -64,7 +63,7 @@ namespace AgriHub.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("Successful login for user: {Email} with role: {Role}", model.Email, role);
+                 
 
                     if (role == "Employee")
                     {
@@ -81,7 +80,7 @@ namespace AgriHub.Controllers
                 }
                 else
                 {
-                    _logger.LogWarning("Login failed: Invalid password for user: {Email}", model.Email);
+                   
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 }
             }
