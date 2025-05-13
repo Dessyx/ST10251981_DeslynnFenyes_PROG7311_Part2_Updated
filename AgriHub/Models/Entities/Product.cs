@@ -7,9 +7,19 @@ namespace AgriHub.Models.Entities
         [Key]
         public int ProductId { get; set; }
         public int FarmerId { get; set; }
+
+        [Required(ErrorMessage = "Product name is required")]
+        [StringLength(100, ErrorMessage = "Product name cannot be longer than 100 characters")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Category is required")]
+        [StringLength(50, ErrorMessage = "Category cannot be longer than 50 characters")]
         public string Category { get; set; }
+
+        [Required(ErrorMessage = "Production date is required")]
+        [DataType(DataType.Date)]
         public DateTime ProductionDate { get; set; }
+
         public Farmer Farmer { get; set; }
     }
 }

@@ -14,6 +14,11 @@ namespace AgriHub.Models
         [Display(Name = "Product Category")]
         public string? Category { get; set; }
 
+        [Display(Name = "Farmer")]
+        public int? FarmerId { get; set; }
+
         public IEnumerable<Product> Products { get; set; } = new List<Product>();
+        public IEnumerable<Farmer> Farmers { get; set; } = new List<Farmer>();
+        public IEnumerable<string> AvailableCategories { get; set; } = new List<string>();
     }
 } 

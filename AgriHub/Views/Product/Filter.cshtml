@@ -24,10 +24,28 @@
                             <input asp-for="EndDate" class="form-control" type="date" />
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label asp-for="Category" class="control-label"></label>
-                            <input asp-for="Category" class="form-control" />
+                            <select asp-for="Category" class="form-control">
+                                <option value="">All Categories</option>
+                                @foreach (var category in Model.AvailableCategories)
+                                {
+                                    <option value="@category">@category</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="FarmerId" class="control-label"></label>
+                            <select asp-for="FarmerId" class="form-control">
+                                <option value="">All Farmers</option>
+                                @foreach (var farmer in Model.Farmers)
+                                {
+                                    <option value="@farmer.FarmerId">@farmer.Name</option>
+                                }
+                            </select>
                         </div>
                     </div>
                 </div>

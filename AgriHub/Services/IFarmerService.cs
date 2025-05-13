@@ -9,6 +9,6 @@ namespace AgriHub.Services
     {
         Task<IEnumerable<Farmer>> GetAllFarmersAsync();
         Task<Farmer> GetFarmerByUserIdAsync(string userId);
-        Task AddFarmerAsync(Farmer farmer);
+        Task<(bool succeeded, string[] errors)> CreateFarmerAsync(FarmerViewModel model);
     }
 }

@@ -1,4 +1,5 @@
-﻿@model AgriHub.Models.Entities.Product
+﻿@model AgriHub.Models.ProductViewModel
+
 @{
     ViewData["Title"] = "Add Product";
 }
@@ -50,5 +51,5 @@
 </div>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

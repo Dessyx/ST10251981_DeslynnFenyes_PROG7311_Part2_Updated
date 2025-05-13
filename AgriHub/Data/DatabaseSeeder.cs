@@ -25,34 +25,6 @@ namespace AgriHub.Data
                 }
             }
 
-            //----------------------------------------------------------------------------
-            // Create default Farmer
-            var farmerUser = new IdentityUser
-            {
-                UserName = "farmer1@farm.com",   // use this username for email
-                Email = "farmer1@farm.com",
-                EmailConfirmed = true
-            };
-            if (userManager.Users.All(u => u.UserName != farmerUser.UserName))
-            {
-                var result = await userManager.CreateAsync(farmerUser, "Password123!");   // use this password
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(farmerUser, "Farmer");
-
-                    // Create Farmer record
-                    var farmer = new Farmer
-                    {
-                        UserId = farmerUser.Id,
-                        Name = "John Farmer",
-                        Email = farmerUser.Email,
-                        Phone = "1234567890"
-                    };
-                   /* context.Farmers.Add(farmer);
-                    await context.SaveChangesAsync();*/
-                }
-            }
-            //------------------------------------------------------------------------------
             // Create default Employee
             var employeeUser = new IdentityUser
             {

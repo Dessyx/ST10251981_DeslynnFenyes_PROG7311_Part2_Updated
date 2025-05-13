@@ -9,9 +9,51 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AgriHub.styles.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
+    <style>
+        .logout-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: transparent;
+            border: 2px solid;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
 
+        .logout-button.light {
+            border-color: #000;
+            color: #000;
+        }
+
+        .logout-button.light:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .logout-button.dark {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .logout-button.dark:hover {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
 </head>
 <body>
+    @if (User.Identity.IsAuthenticated && !(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Index"))
+    {
+        var isDarkBackground = ViewContext.RouteData.Values["controller"].ToString() == "Account" || 
+                              ViewContext.RouteData.Values["controller"].ToString() == "Farmer";
+        <form asp-controller="Account" asp-action="Logout" method="post" style="display: inline;">
+            <button type="submit" class="logout-button @(isDarkBackground ? "dark" : "light")">Logout</button>
+        </form>
+    }
     @* <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">

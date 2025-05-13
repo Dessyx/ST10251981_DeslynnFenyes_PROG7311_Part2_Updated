@@ -1,4 +1,4 @@
-﻿@model AgriHub.Models.Entities.Farmer
+﻿@model AgriHub.Models.FarmerViewModel
 @{
     ViewData["Title"] = "Add Farmer";
 }
@@ -19,6 +19,16 @@
         <label asp-for="Phone" class="form-label"></label>
         <input asp-for="Phone" class="form-control" />
         <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ConfirmPassword" class="form-label"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Add Farmer</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
