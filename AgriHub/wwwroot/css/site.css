@@ -23,7 +23,7 @@ body {
 
 /* AgriHub Custom Styles */
 .agrihub-hero {
-    background: white;
+    background: url('/Images/Landing.png') no-repeat center center fixed;
     padding-bottom: 0;
 }
 

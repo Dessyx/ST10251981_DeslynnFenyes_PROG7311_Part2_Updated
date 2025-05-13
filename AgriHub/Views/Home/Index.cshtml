@@ -2,15 +2,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="agrihub-hero">
-    <div class="agrihub-header d-flex align-items-center mb-4">
-        <img src="/Images/Logo.png" alt="AgriHub Logo" class="agrihub-logo me-2" style="width:60px; height:48px;" />
+<div class="agrihub-hero d-flex flex-column" style="min-height: 100vh;">
+    <div class="agrihub-header d-flex align-items-center mb-2">
+        <img src="/Images/Logo.png" alt="AgriHub Logo" class="agrihub-logo me-2" style="width:45px; height:36px;" />
         <span class="agrihub-title">AgriHub</span>
     </div>
-    <div class="agrihub-main-content position-relative">
-        <div class="agrihub-illustration d-flex justify-content-center mb-4">
-            <img src="/Images/Landing.png" alt="Eco City" class="img-fluid rounded shadow" style="max-width: 500px;" />
-        </div>
+    <div class="agrihub-main-content position-relative flex-grow-1">
+        
         <div class="agrihub-bubble agrihub-bubble-employees">
             <span class="bubble-title">Employees</span><br />
             Bring farmers onboard—create profiles today!<br />Find exactly what you need and filter products.
@@ -25,15 +23,36 @@
             Employees: Access and manage all farm products
         </div>
     </div>
-    <div class="text-center mt-4">
+    <div class="text-center mt-2">
         <button type="button" onclick="location.href='/Account/Login'" class="btn btn-dark btn-lg px-5 py-2">
             Let's get started!
         </button>
     </div>
-
+    <footer class="agrihub-footer mt-2">
+        <div class="agrihub-footer-bar text-center py-2">
+            <span class="footer-slogan">Grow more, connect more – with AgriHub</span>
+        </div>
+    </footer>
 </div>
-<footer class="agrihub-footer mt-5">
-    <div class="agrihub-footer-bar text-center py-4">
-        <span class="footer-slogan">Grow more, connect more – with AgriHub</span>
-    </div>
-</footer>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    
+    .agrihub-hero {
+        padding: 1rem;
+    }
+
+    .agrihub-main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .agrihub-bubble {
+        margin: 0.5rem 0;
+    }
+</style>
