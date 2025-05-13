@@ -5,12 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using AgriHub.Data;
-using Microsoft.Extensions.Logging;
 
 namespace AgriHub.Controllers
 {
@@ -20,21 +15,15 @@ namespace AgriHub.Controllers
         private readonly IProductService _productService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IFarmerService _farmerService;
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<ProductController> _logger;
 
         public ProductController(
             IProductService productService, 
             UserManager<IdentityUser> userManager,
-            IFarmerService farmerService,
-            ApplicationDbContext context,
-            ILogger<ProductController> logger)
+            IFarmerService farmerService)
         {
             _productService = productService;
             _userManager = userManager;
             _farmerService = farmerService;
-            _context = context;
-            _logger = logger;
         }
 
         [Authorize(Roles = "Farmer")]
@@ -63,18 +52,10 @@ namespace AgriHub.Controllers
             try
             {
                 var user = await _userManager.GetUserAsync(User);
-                if (user == null)
-                {
-                    _logger.LogWarning("User not found when trying to add product");
-                    return Unauthorized();
-                }
+                if (user == null) return Unauthorized();
 
                 var farmer = await _farmerService.GetFarmerByUserIdAsync(user.Id);
-                if (farmer == null)
-                {
-                    _logger.LogWarning("Farmer not found for user {UserId} when trying to add product", user.Id);
-                    return Unauthorized();
-                }
+                if (farmer == null) return Unauthorized();
 
                 if (ModelState.IsValid)
                 {
@@ -86,23 +67,12 @@ namespace AgriHub.Controllers
                         FarmerId = farmer.FarmerId
                     };
 
-                    _logger.LogInformation("Adding product {ProductName} for farmer {FarmerId}", product.Name, farmer.FarmerId);
                     await _productService.AddProductAsync(product);
-                    _logger.LogInformation("Successfully added product {ProductId} for farmer {FarmerId}", product.ProductId, farmer.FarmerId);
                     return RedirectToAction("MyProducts");
                 }
-                else
-                {
-                    _logger.LogWarning("Invalid model state when adding product");
-                    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                    {
-                        _logger.LogWarning("Validation error: {Error}", error.ErrorMessage);
-                    }
-                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, "Error occurred while adding product");
                 ModelState.AddModelError(string.Empty, "An error occurred while adding the product. Please try again.");
             }
             return View(model);
@@ -117,42 +87,8 @@ namespace AgriHub.Controllers
 
         public async Task<IActionResult> Filter(ProductFilterViewModel filter)
         {
-            var query = _context.Products
-                .Include(p => p.Farmer)
-                .AsQueryable();
-
-            if (filter.StartDate.HasValue)
-            {
-                query = query.Where(p => p.ProductionDate >= filter.StartDate.Value);
-            }
-
-            if (filter.EndDate.HasValue)
-            {
-                query = query.Where(p => p.ProductionDate <= filter.EndDate.Value);
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.Category))
-            {
-                query = query.Where(p => p.Category == filter.Category);
-            }
-
-            if (filter.FarmerId.HasValue)
-            {
-                query = query.Where(p => p.FarmerId == filter.FarmerId.Value);
-            }
-
-            // Get all farmers for the dropdown
-            filter.Farmers = await _context.Farmers.ToListAsync();
-            
-            // Get unique categories from existing products
-            filter.AvailableCategories = await _context.Products
-                .Select(p => p.Category)
-                .Distinct()
-                .OrderBy(c => c)
-                .ToListAsync();
-            
-            filter.Products = await query.ToListAsync();
-            return View(filter);
+            var result = await _productService.GetFilteredProductsAsync(filter);
+            return View(result);
         }
     }
 }

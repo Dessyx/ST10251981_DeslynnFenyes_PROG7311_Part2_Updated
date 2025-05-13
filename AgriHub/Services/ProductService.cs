@@ -6,21 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace AgriHub.Services
 {
     public class ProductService : IProductService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(
-            ApplicationDbContext context,
-            ILogger<ProductService> logger)
+        public ProductService(ApplicationDbContext context)
         {
             _context = context;
-            _logger = logger;
+        }
+
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await _context.Products
+                .Include(p => p.Farmer)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Product>> GetProductsByFarmerAsync(int farmerId)
@@ -30,46 +32,102 @@ namespace AgriHub.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> FilterProductsAsync(int? farmerId, string category, DateTime? from, DateTime? to)
+        public async Task<Product> GetProductByIdAsync(int id)
         {
-            var query = _context.Products.AsQueryable();
-            if (farmerId.HasValue)
-                query = query.Where(p => p.FarmerId == farmerId);
-            if (!string.IsNullOrEmpty(category))
-                query = query.Where(p => p.Category == category);
-            if (from.HasValue)
-                query = query.Where(p => p.ProductionDate >= from);
-            if (to.HasValue)
-                query = query.Where(p => p.ProductionDate <= to);
-            return await query.Include(p => p.Farmer).ToListAsync();
+            return await _context.Products
+                .Include(p => p.Farmer)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
         public async Task AddProductAsync(Product product)
         {
-            try
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateProductAsync(Product product)
+        {
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteProductAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product != null)
             {
-                _logger.LogInformation("Adding product {ProductName} for farmer {FarmerId}", product.Name, product.FarmerId);
-
-                // Verify the farmer exists
-                var farmer = await _context.Farmers.FindAsync(product.FarmerId);
-                if (farmer == null)
-                {
-                    _logger.LogError("Farmer {FarmerId} not found when adding product", product.FarmerId);
-                    throw new InvalidOperationException($"Farmer with ID {product.FarmerId} not found");
-                }
-
-                _context.Products.Add(product);
+                _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
+            }
+        }
 
-                _logger.LogInformation("Successfully added product {ProductId} for farmer {FarmerId}", 
-                    product.ProductId, product.FarmerId);
-            }
-            catch (Exception ex)
+        public async Task<IEnumerable<Product>> FilterProductsAsync(int? farmerId, string category, DateTime? from, DateTime? to)
+        {
+            var query = _context.Products
+                .Include(p => p.Farmer)
+                .AsQueryable();
+
+            if (farmerId.HasValue)
             {
-                _logger.LogError(ex, "Error occurred while adding product {ProductName} for farmer {FarmerId}", 
-                    product.Name, product.FarmerId);
-                throw;
+                query = query.Where(p => p.FarmerId == farmerId.Value);
             }
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                query = query.Where(p => p.Category == category);
+            }
+
+            if (from.HasValue)
+            {
+                query = query.Where(p => p.ProductionDate >= from.Value);
+            }
+
+            if (to.HasValue)
+            {
+                query = query.Where(p => p.ProductionDate <= to.Value);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<ProductFilterViewModel> GetFilteredProductsAsync(ProductFilterViewModel filter)
+        {
+            var query = _context.Products
+                .Include(p => p.Farmer)
+                .AsQueryable();
+
+            if (filter.StartDate.HasValue)
+            {
+                query = query.Where(p => p.ProductionDate >= filter.StartDate.Value);
+            }
+
+            if (filter.EndDate.HasValue)
+            {
+                query = query.Where(p => p.ProductionDate <= filter.EndDate.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Category))
+            {
+                query = query.Where(p => p.Category == filter.Category);
+            }
+
+            if (filter.FarmerId.HasValue)
+            {
+                query = query.Where(p => p.FarmerId == filter.FarmerId.Value);
+            }
+
+            // Get all farmers for the dropdown
+            filter.Farmers = await _context.Farmers.ToListAsync();
+            
+            // Get unique categories from existing products
+            filter.AvailableCategories = await _context.Products
+                .Select(p => p.Category)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            
+            filter.Products = await query.ToListAsync();
+            return filter;
         }
     }
 }
