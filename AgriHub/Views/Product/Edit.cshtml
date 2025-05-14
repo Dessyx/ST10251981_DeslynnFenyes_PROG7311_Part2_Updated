@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Edit Product";
+    // Set default date to 2025 if not already set
+    if (Model.ProductionDate == default(DateTime))
+    {
+        Model.ProductionDate = new DateTime(2025, 1, 1);
+    }
 }
 <link rel="stylesheet" href="~/css/productForm.css" />
 
@@ -36,7 +41,7 @@
                 <div class="form-group">
                     <label for="ProductionDate">Production Date</label>
                     <span asp-validation-for="ProductionDate" class="text-danger"></span>
-                    <input asp-for="ProductionDate" type="date" class="form-control" />
+                    <input asp-for="ProductionDate" type="date" class="form-control" value="@Model.ProductionDate.ToString("yyyy-MM-dd")" />
                 </div>
 
                 <!-- Price -->
