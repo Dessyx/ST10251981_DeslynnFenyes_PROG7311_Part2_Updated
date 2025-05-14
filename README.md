@@ -18,6 +18,7 @@ This project is a Agri-Energy Connect Platform built with ASP.NET Core MVC desig
 NOTE: To sign in as a Employee, please use Email: employee1@agri.com and Password: Password123!
 - You need to add a farmer with their respective email and password.
 - Using those credentials, sign in as a farmer.
+- You can only sign in as a farmer with credentials a employee created.
 
 1. Within the repository, click on the "<> Code" drop down on the far right 
    next to the "Go to file" and "+" buttons.
@@ -51,5 +52,3 @@ NOTE: To sign in as a Employee, please use Email: employee1@agri.com and Passwor
 - Dashboard feature to oversee farmers and products for Employees.
 - Farmers have the ability to add and view their products.
 - Employees can filter farmers and products effectively.
-
-GitHub Link: https://github.com/Dessyx/AgriHub 
