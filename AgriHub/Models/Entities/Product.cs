@@ -2,6 +2,8 @@
 
 namespace AgriHub.Models.Entities
 {
+    //---------------------------------------------------------------------------------------------------
+    // Product model with attributes and checks
     public class Product
     {
         [Key]
@@ -28,3 +30,4 @@ namespace AgriHub.Models.Entities
         public Farmer Farmer { get; set; }
     }
 }
+//------------------------------------------<<< End of File >>>---------------------------------------------------------

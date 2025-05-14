@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace AgriHub.Services
 {
+    //---------------------------------------------------------------------------------------------------
+    // Handles product functionality
     public class ProductService : IProductService
     {
         private readonly ApplicationDbContext _context;
@@ -18,6 +20,8 @@ namespace AgriHub.Services
             _context = context;
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Fetches products including their assigned farmer 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
             return await _context.Products
@@ -25,6 +29,8 @@ namespace AgriHub.Services
                 .ToListAsync();
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Fetches the products using the farmers id
         public async Task<IEnumerable<Product>> GetProductsByFarmerAsync(int farmerId)
         {
             return await _context.Products
@@ -32,6 +38,8 @@ namespace AgriHub.Services
                 .ToListAsync();
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Fetches the products by the product id
         public async Task<Product> GetProductByIdAsync(int id)
         {
             return await _context.Products
@@ -39,18 +47,24 @@ namespace AgriHub.Services
                 .FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Adds the product to the database 
         public async Task AddProductAsync(Product product)
         {
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Updates product changes 
         public async Task UpdateProductAsync(Product product)
         {
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Deletes the product from the database
         public async Task DeleteProductAsync(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -61,6 +75,8 @@ namespace AgriHub.Services
             }
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Filter commands for product filtering 
         public async Task<IEnumerable<Product>> FilterProductsAsync(int? farmerId, string category, DateTime? from, DateTime? to, decimal? minPrice = null, decimal? maxPrice = null)
         {
             var query = _context.Products
@@ -100,6 +116,8 @@ namespace AgriHub.Services
             return await query.ToListAsync();
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Filter commands for product filtering 
         public async Task<ProductFilterViewModel> GetFilteredProductsAsync(ProductFilterViewModel filter)
         {
             var query = _context.Products
@@ -139,7 +157,7 @@ namespace AgriHub.Services
             // Get all farmers for the dropdown
             filter.Farmers = await _context.Farmers.ToListAsync();
             
-            // Get unique categories from existing products
+            // Get categories from existing products
             filter.AvailableCategories = await _context.Products
                 .Select(p => p.Category)
                 .Distinct()
@@ -151,3 +169,4 @@ namespace AgriHub.Services
         }
     }
 }
+//----------------------------------------------<<< End of File >>>-----------------------------------------------------

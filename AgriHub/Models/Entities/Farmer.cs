@@ -2,6 +2,8 @@
 
 namespace AgriHub.Models.Entities
 {
+    //---------------------------------------------------------------------------------------------------
+    // Farmer model with attributes
     public class Farmer
     {
         [Key]
@@ -13,3 +15,4 @@ namespace AgriHub.Models.Entities
         public ICollection<Product> Products { get; set; }
     }
 }
+//---------------------------------------------<<< End of File >>>------------------------------------------------------

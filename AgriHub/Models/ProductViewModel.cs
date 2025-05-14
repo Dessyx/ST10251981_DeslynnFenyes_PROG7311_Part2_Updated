@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgriHub.Models
 {
+    //---------------------------------------------------------------------------------------------------
+    // Passes the product data to the view 
     public class ProductViewModel
     {
         [Required(ErrorMessage = "Please enter a product name")]
@@ -24,4 +26,5 @@ namespace AgriHub.Models
         [Display(Name = "Price")]
         public decimal Price { get; set; }
     }
-} 
+}
+//----------------------------------------------<<< End of File >>>-----------------------------------------------------

@@ -14,6 +14,11 @@ This project is a Agri-Energy Connect Platform built with ASP.NET Core MVC desig
 - SQL Server or LocalDB
   
 ### Setup Instructions
+
+NOTE: To sign in as a Employee, please use Email: employee1@agri.com and Password: Password123!
+- You need to add a farmer with their respective email and password.
+- Using those credentials, sign in as a farmer.
+
 1. Within the repository, click on the "<> Code" drop down on the far right 
    next to the "Go to file" and "+" buttons.
 2. On the Local tab, click on the last option: "Download ZIP".

@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgriHub.Models
 {
+    //---------------------------------------------------------------------------------------------------
+    // Passes the farmer data to the view
     public class FarmerViewModel
     {
         [Required(ErrorMessage = "Please enter the farmer's name")]
@@ -31,4 +33,5 @@ namespace AgriHub.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
     }
-} 
+}
+//-----------------------------------------<<< End of File >>>----------------------------------------------------------

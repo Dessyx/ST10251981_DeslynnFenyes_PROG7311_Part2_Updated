@@ -2,18 +2,19 @@
 using AgriHub.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading.Tasks;            // Imports
 using Microsoft.Extensions.Logging;
 
 namespace AgriHub.Controllers
 {
+    // -------------------------------------------------------------------------------------------------------
+    // Controller which handles the Login and Page navigation for users
     public class AccountController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
- 
 
-        public AccountController(
+        public AccountController(  // Passes the authentication managers through the constructor
             SignInManager<IdentityUser> signInManager, 
             UserManager<IdentityUser> userManager)
         {
@@ -22,6 +23,8 @@ namespace AgriHub.Controllers
          
         }
 
+        // ---------------------------------------------------------------------------------------------------
+        // Displays the Login page
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
@@ -29,13 +32,13 @@ namespace AgriHub.Controllers
             return View();
         }
 
+        //-----------------------------------------------------------------------------------------------------
+        // Post method to authenticate users and direct them to their respective pages
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
-          
-
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
@@ -47,31 +50,28 @@ namespace AgriHub.Controllers
                 var roles = await _userManager.GetRolesAsync(user);
                 var role = roles.FirstOrDefault();
 
-                // Check if it's an employee login attempt
+                // Checks if it's an employee attempting to log in
                 if (role == "Employee")
                 {
-                    // Verify if this is the predefined employee account
+                    // Verifies if the entered email matches the employee email
                     if (model.Email != "employee1@agri.com")
-                    {
-                     
+                    {                    
                         ModelState.AddModelError(string.Empty, "Invalid employee login attempt.");
                         return View(model);
                     }
                 }
-                // For farmers, we don't need to check the email since they can only login with their assigned credentials
 
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                 
-
+                    // Checks the roles
                     if (role == "Employee")
                     {
-                        return RedirectToAction("Index", "Farmer");
+                        return RedirectToAction("Index", "Farmer"); // Employees are directed to add farmers, view producst and filters
                     }
                     else if (role == "Farmer")
                     {
-                        return RedirectToAction("MyProducts", "Product");
+                        return RedirectToAction("MyProducts", "Product"); // Farmers are directed to view and add products
                     }
                     else
                     {
@@ -87,6 +87,8 @@ namespace AgriHub.Controllers
             return View(model);
         }
 
+        //------------------------------------------------------------------------------------------------------------
+        // Logs the user out of their account
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -95,3 +97,4 @@ namespace AgriHub.Controllers
         }
     }
 }
+// -----------------------------------------------------<<< End Of File >>>---------------------------------------------

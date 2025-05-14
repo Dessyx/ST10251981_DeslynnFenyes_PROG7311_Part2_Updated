@@ -10,15 +10,10 @@ namespace AgriHub.Data
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public DbSet<Farmer> Farmers { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Farmer> Farmers { get; set; } // Adds Farmers table
+        public DbSet<Product> Products { get; set; }  // Adds Products table
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        /*protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            // Seed sample data here if needed
-        }*/
     }
 }

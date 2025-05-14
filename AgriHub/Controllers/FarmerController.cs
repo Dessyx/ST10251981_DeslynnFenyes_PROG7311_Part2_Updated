@@ -1,7 +1,7 @@
 ﻿using AgriHub.Models;
 using AgriHub.Services;
 using AgriHub.Models.Entities;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;       // Imports
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using AgriHub.Data;
@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AgriHub.Controllers
 {
+
+    // -----------------------------------------------------------------------------------------------
+    // Controller that handles farmer data
     [Authorize(Roles = "Employee")]
     public class FarmerController : Controller
     {
@@ -17,7 +20,7 @@ namespace AgriHub.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public FarmerController(
+        public FarmerController(   
             IFarmerService farmerService, 
             ApplicationDbContext context,
             UserManager<IdentityUser> userManager)
@@ -27,9 +30,11 @@ namespace AgriHub.Controllers
             _userManager = userManager;
         }
 
+        //-----------------------------------------------------------------------------------------------
+        //Displays the dashboard to the Employee 
         public async Task<IActionResult> Index()
         {
-            var farmers = await _farmerService.GetAllFarmersAsync();
+            var farmers = await _farmerService.GetAllFarmersAsync();   // Passes the necessary data to the view
             var products = _context.Products.ToList();
             ViewBag.TotalFarmers = _context.Farmers.Count();
             ViewBag.TotalProducts = _context.Products.Count();
@@ -75,11 +80,15 @@ namespace AgriHub.Controllers
             return View(farmers);
         }
 
+        // -------------------------------------------------------------------------------------------------
+        // Displays the form to the user
         public IActionResult AddFarmer()
         {
             return View(new FarmerViewModel());
         }
 
+        // --------------------------------------------------------------------------------------------------
+        // Adds the farmer to the database
         [HttpPost]
         public async Task<IActionResult> AddFarmer(FarmerViewModel model)
         {
@@ -89,7 +98,7 @@ namespace AgriHub.Controllers
                 
                 if (succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index"); // Directs back to dashboard and the farmer is added
                 }
                 
                 foreach (var error in errors)
@@ -101,3 +110,4 @@ namespace AgriHub.Controllers
         }
     }
 }
+// ----------------------------------------------<<< End of File >>>------------------------------------------

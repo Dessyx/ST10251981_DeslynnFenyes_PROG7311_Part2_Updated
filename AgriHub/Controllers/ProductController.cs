@@ -1,7 +1,7 @@
 ﻿using AgriHub.Models;
 using AgriHub.Services;
 using AgriHub.Models.Entities;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;               // Imports
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace AgriHub.Controllers
 {
+    //--------------------------------------------------------------------------------------------------
+    // Controller that handles functionality behind products
     [Authorize]
     public class ProductController : Controller
     {
@@ -26,6 +28,8 @@ namespace AgriHub.Controllers
             _farmerService = farmerService;
         }
 
+        //-----------------------------------------------------------------------------------------------
+        // Displays the products that are assigned to the specific farmer
         [Authorize(Roles = "Farmer")]
         public async Task<IActionResult> MyProducts()
         {
@@ -39,12 +43,16 @@ namespace AgriHub.Controllers
             return View(products);
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Displays the add product form view to the farmer
         [Authorize(Roles = "Farmer")]
         public IActionResult AddProduct()
         {
             return View(new ProductViewModel());
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Adds the product to the database
         [HttpPost]
         [Authorize(Roles = "Farmer")]
         public async Task<IActionResult> AddProduct(ProductViewModel model)
@@ -79,6 +87,8 @@ namespace AgriHub.Controllers
             return View(model);
         }
 
+        // -----------------------------------------------------------------------------------------------
+        // Edits the product infromation 
         [Authorize(Roles = "Farmer")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -107,6 +117,8 @@ namespace AgriHub.Controllers
             return View(model);
         }
 
+        // -----------------------------------------------------------------------------------------------
+        // Edits the product infromation through ProductViewModel
         [HttpPost]
         [Authorize(Roles = "Farmer")]
         public async Task<IActionResult> Edit(int id, ProductViewModel model)
@@ -144,6 +156,8 @@ namespace AgriHub.Controllers
             return View(model);
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Deletes the product from the database
         [HttpPost]
         [Authorize(Roles = "Farmer")]
         public async Task<IActionResult> Delete(int id)
@@ -166,6 +180,8 @@ namespace AgriHub.Controllers
             return RedirectToAction("MyProducts");
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Passes through the product information
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> AllProducts(string category, DateTime? from, DateTime? to, int? farmerId, decimal? minPrice, decimal? maxPrice)
         {
@@ -173,6 +189,8 @@ namespace AgriHub.Controllers
             return View(products);
         }
 
+        //---------------------------------------------------------------------------------------------------
+        // Filters products 
         public async Task<IActionResult> Filter(ProductFilterViewModel filter)
         {
             var result = await _productService.GetFilteredProductsAsync(filter);
@@ -180,3 +198,4 @@ namespace AgriHub.Controllers
         }
     }
 }
+// --------------------------------------<<< Enf of File >>>-------------------------------------------------

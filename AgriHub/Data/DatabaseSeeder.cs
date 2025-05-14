@@ -5,12 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgriHub.Data
 {
+    //---------------------------------------------------------------------------------------------------
+    // Supplies the database with needed data
     public class DatabaseSeeder
     {
         public static async Task SeedUsersAndRoles(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();  // Initialise services
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Define roles
@@ -41,15 +43,15 @@ namespace AgriHub.Data
                 }
             }
 
-            // Seeded farmers and products if there aren't any
+            // Seeded farmers and products for dummy data
             if (!context.Farmers.Any())
             {
                 var farmers = new List<Farmer>
                 {
-                    new Farmer { Name = "Alice Green", Email = "alice@farm.com", Phone = "123-456-7890", UserId = "alice1" },
-                    new Farmer { Name = "Bob Brown", Email = "bob@farm.com", Phone = "234-567-8901", UserId = "bob1" },
-                    new Farmer { Name = "Cathy Blue", Email = "cathy@farm.com", Phone = "345-678-9012", UserId = "cathy1" },
-                    new Farmer { Name = "David Red", Email = "david@farm.com", Phone = "456-789-0123", UserId = "david1" }
+                    new Farmer { Name = "Xavier Martin", Email = "xavier@farm.com", Phone = "123-456-7890", UserId = "xav1" },
+                    new Farmer { Name = "Bob Marley", Email = "bobby@farm.com", Phone = "234-567-8901", UserId = "bob1" },
+                    new Farmer { Name = "Christiano Ronaldo", Email = "christiano@farm.com", Phone = "345-678-9012", UserId = "chris1" },
+                    new Farmer { Name = "Rodrygo Goes", Email = "rodry@farm.com", Phone = "456-789-0123", UserId = "rod1" }
                 };
                 context.Farmers.AddRange(farmers);
                 context.SaveChanges();
@@ -61,7 +63,7 @@ namespace AgriHub.Data
                     new Product { Name = "Free-range Eggs", Category = "Poultry", ProductionDate = DateTime.Now.AddMonths(-1), Price = 40.00m, FarmerId = farmers[1].FarmerId },
                     new Product { Name = "Sweet Corn", Category = "Vegetable", ProductionDate = DateTime.Now.AddMonths(-3), Price = 28.00m, FarmerId = farmers[1].FarmerId },
                     new Product { Name = "Raw Honey", Category = "Honey", ProductionDate = DateTime.Now.AddMonths(-4), Price = 32.00m, FarmerId = farmers[2].FarmerId },
-                    new Product { Name = "Goat Cheese", Category = "Dairy", ProductionDate = DateTime.Now.AddMonths(-2), Price = 39.00m, FarmerId = farmers[2].FarmerId },
+                    new Product { Name = "Goat Cheese", Category = "Dairy", ProductionDate = DateTime.Now.AddMonths(-2), Price = 39.00m, FarmerId = farmers[3].FarmerId },
                     new Product { Name = "Sunflower Seeds", Category = "Seeds", ProductionDate = DateTime.Now.AddMonths(-5), Price = 15.00m, FarmerId = farmers[3].FarmerId },
                     new Product { Name = "Pumpkin", Category = "Vegetable", ProductionDate = DateTime.Now.AddMonths(-1), Price = 23.00m, FarmerId = farmers[3].FarmerId }
                 };
@@ -71,3 +73,4 @@ namespace AgriHub.Data
         }
     }
 }
+//-------------------------------------------------------<<< End Of File >>>----------------------------------------------------

@@ -3,6 +3,8 @@ using AgriHub.Models.Entities;
 
 namespace AgriHub.Models
 {
+    //---------------------------------------------------------------------------------------------------
+    // Passes the needed data for filtering to the view
     public class ProductFilterViewModel
     {
         [Display(Name = "Start Date")]
@@ -27,4 +29,5 @@ namespace AgriHub.Models
         public IEnumerable<Farmer> Farmers { get; set; } = new List<Farmer>();
         public IEnumerable<string> AvailableCategories { get; set; } = new List<string>();
     }
-} 
+}
+//------------------------------------------<<< End of File >>>---------------------------------------------------------
