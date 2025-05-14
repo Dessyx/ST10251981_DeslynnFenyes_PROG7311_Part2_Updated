@@ -146,7 +146,19 @@ h1 {
     margin: 20px 0;
 }
 
+.letsgo-btn {
+    border-radius: 30px !important; 
+    background-color: #000 !important; 
+    color: #fff !important; 
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: background 0.2s, color 0.2s;
+}
 
+    .letsgo-btn:hover {
+        background: #222 !important;
+        color: #fff !important;
+    }
 
 
 #slideshow {
