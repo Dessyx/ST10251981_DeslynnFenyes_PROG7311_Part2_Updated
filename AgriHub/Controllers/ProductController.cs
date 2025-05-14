@@ -64,6 +64,7 @@ namespace AgriHub.Controllers
                         Name = model.Name,
                         Category = model.Category,
                         ProductionDate = model.ProductionDate,
+                        Price = model.Price,
                         FarmerId = farmer.FarmerId
                     };
 
@@ -79,9 +80,9 @@ namespace AgriHub.Controllers
         }
 
         [Authorize(Roles = "Employee")]
-        public async Task<IActionResult> AllProducts(string category, DateTime? from, DateTime? to, int? farmerId)
+        public async Task<IActionResult> AllProducts(string category, DateTime? from, DateTime? to, int? farmerId, decimal? minPrice, decimal? maxPrice)
         {
-            var products = await _productService.FilterProductsAsync(farmerId, category, from, to);
+            var products = await _productService.FilterProductsAsync(farmerId, category, from, to, minPrice, maxPrice);
             return View(products);
         }
 

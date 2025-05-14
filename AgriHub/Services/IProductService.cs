@@ -14,7 +14,7 @@ namespace AgriHub.Services
         Task AddProductAsync(Product product);
         Task UpdateProductAsync(Product product);
         Task DeleteProductAsync(int id);
-        Task<IEnumerable<Product>> FilterProductsAsync(int? farmerId, string category, DateTime? from, DateTime? to);
+        Task<IEnumerable<Product>> FilterProductsAsync(int? farmerId, string category, DateTime? from, DateTime? to, decimal? minPrice = null, decimal? maxPrice = null);
         Task<ProductFilterViewModel> GetFilteredProductsAsync(ProductFilterViewModel filter);
     }
 }

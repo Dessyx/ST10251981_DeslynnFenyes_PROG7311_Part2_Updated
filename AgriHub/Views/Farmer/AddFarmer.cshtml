@@ -1,35 +1,68 @@
 ﻿@model AgriHub.Models.FarmerViewModel
+
 @{
     ViewData["Title"] = "Add Farmer";
 }
-<a asp-action="Index" class="btn btn-outline-secondary" style="position: absolute; top: 20px; left: 20px; z-index: 10;">&larr; Back</a>
-<h2>Add Farmer</h2>
-<form asp-action="AddFarmer" method="post">
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Phone" class="form-label"></label>
-        <input asp-for="Phone" class="form-control" />
-        <span asp-validation-for="Phone" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Password" class="form-label"></label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="ConfirmPassword" class="form-label"></label>
-        <input asp-for="ConfirmPassword" class="form-control" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Add Farmer</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form> 
+<link rel="stylesheet" href="~/css/FarmerForm.css" />
+
+<div class="claim-form-container" style="max-width: 600px; margin: auto;">
+
+    <form asp-controller="Farmer" asp-action="AddFarmer" method="post">
+
+        <h1>Add Farmer</h1>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-row">
+            <div class="left-column">
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label asp-for="Name">Full Name</label>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input asp-for="Name" class="form-control" placeholder="Enter full name" />
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input asp-for="Email" class="form-control" placeholder="Enter email address" />
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group">
+                    <label asp-for="Phone">Phone Number</label>
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                    <input asp-for="Phone" class="form-control" placeholder="Enter phone number" />
+                </div>
+            </div>
+
+            <div class="right-column">
+                <!-- Password -->
+                <div class="form-group">
+                    <label asp-for="Password">Password</label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input asp-for="Password" class="form-control" placeholder="Enter password" />
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm password" />
+                </div>
+            </div>
+        </div>
+
+        <div class="submit-button-container">
+            <button type="submit" class="btn btn-success">Add Farmer</button>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

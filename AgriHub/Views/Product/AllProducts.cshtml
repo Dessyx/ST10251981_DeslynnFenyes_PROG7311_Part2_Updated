@@ -16,6 +16,12 @@
     <div class="col-md-3">
         <input name="farmerId" class="form-control" placeholder="Farmer Id" value="@Context.Request.Query["farmerId"]" />
     </div>
+    <div class="col-md-3">
+        <input name="minPrice" class="form-control" placeholder="Min Price" value="@Context.Request.Query["minPrice"]" />
+    </div>
+    <div class="col-md-3">
+        <input name="maxPrice" class="form-control" placeholder="Max Price" value="@Context.Request.Query["maxPrice"]" />
+    </div>
     <div class="col-md-12">
         <button type="submit" class="btn btn-primary">Filter</button>
     </div>
@@ -26,6 +32,7 @@
             <th>Name</th>
             <th>Category</th>
             <th>Production Date</th>
+            <th>Price</th>
             <th>Farmer</th>
         </tr>
     </thead>
@@ -36,6 +43,7 @@
                 <td>@product.Name</td>
                 <td>@product.Category</td>
                 <td>@product.ProductionDate.ToShortDateString()</td>
+                <td>@product.Price.ToString("C")</td>
                 <td>@product.Farmer?.Name</td>
             </tr>
         }

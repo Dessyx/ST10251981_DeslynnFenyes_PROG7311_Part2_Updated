@@ -1,0 +1,90 @@
+﻿/* farmerForm.css */
+
+/* Form Container */
+form {
+    background-color: black;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+/* Background Gradient for the Page */
+body {
+    background: linear-gradient(to right, lightgreen, deepskyblue);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Flexbox Layout for Left and Right Sections */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Left Column */
+.left-column {
+    width: 48%;
+}
+
+/* Right Column */
+.right-column {
+    width: 48%;
+}
+
+/* Form Inputs and Textarea */
+.form-control {
+    margin-bottom: 15px;
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+/* Labels */
+label {
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Button Styling */
+.btn-success {
+    background: linear-gradient(to right, lightgreen, deepskyblue);
+    color: black;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+}
+
+    .btn-success:hover {
+        background: linear-gradient(to right, deepskyblue, lightgreen);
+        color: black;
+    }
+
+/* Center Submit Button */
+.submit-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+h1 {
+    background: linear-gradient(to right, lightgreen, deepskyblue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* For Firefox */
+    color: transparent; /* Fallback */
+    text-align: center;
+    font-family: 'Lucida Handwriting', cursive;
+    font-size: 2.5em;
+    margin: 0;
+    padding-bottom: 30px;
+}
+
+
+

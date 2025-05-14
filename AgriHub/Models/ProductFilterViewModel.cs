@@ -17,6 +17,12 @@ namespace AgriHub.Models
         [Display(Name = "Farmer")]
         public int? FarmerId { get; set; }
 
+        [Display(Name = "Min Price")]
+        public decimal? MinPrice { get; set; }
+
+        [Display(Name = "Max Price")]
+        public decimal? MaxPrice { get; set; }
+
         public IEnumerable<Product> Products { get; set; } = new List<Product>();
         public IEnumerable<Farmer> Farmers { get; set; } = new List<Farmer>();
         public IEnumerable<string> AvailableCategories { get; set; } = new List<string>();

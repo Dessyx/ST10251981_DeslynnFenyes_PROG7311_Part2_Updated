@@ -20,6 +20,11 @@ namespace AgriHub.Models.Entities
         [DataType(DataType.Date)]
         public DateTime ProductionDate { get; set; }
 
+        [Required(ErrorMessage = "Price is required")]
+        [Range(0.01, 1000000, ErrorMessage = "Price must be greater than 0")]
+        [Display(Name = "Price")]
+        public decimal Price { get; set; }
+
         public Farmer Farmer { get; set; }
     }
 }

@@ -37,16 +37,20 @@
                     <span asp-validation-for="ProductionDate" class="text-danger"></span>
                     <input asp-for="ProductionDate" type="date" class="form-control" />
                 </div>
+
+                <!-- Price -->
+                <div class="form-group">
+                    <label asp-for="Price">Price</label>
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                    <input asp-for="Price" class="form-control" placeholder="Enter price" />
+                </div>
             </div>
         </div>
 
         <div class="submit-button-container">
             <button type="submit" class="btn btn-success">Add Product</button>
         </div>
-
-        <div class="submit-button-container" style="margin-top: 10px;">
-            <a asp-action="MyProducts" class="btn btn-secondary" style="background-color: gray; padding: 10px 20px; border-radius: 50px; color: white; text-decoration: none;">Cancel</a>
-        </div>
+c
     </form>
 </div>
 

@@ -18,5 +18,10 @@ namespace AgriHub.Models
         [DataType(DataType.Date)]
         [Display(Name = "Production Date")]
         public DateTime ProductionDate { get; set; }
+
+        [Required(ErrorMessage = "Please enter a price")]
+        [Range(0.01, 1000000, ErrorMessage = "Price must be greater than 0")]
+        [Display(Name = "Price")]
+        public decimal Price { get; set; }
     }
 } 

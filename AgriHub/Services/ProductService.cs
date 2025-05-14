@@ -61,7 +61,7 @@ namespace AgriHub.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> FilterProductsAsync(int? farmerId, string category, DateTime? from, DateTime? to)
+        public async Task<IEnumerable<Product>> FilterProductsAsync(int? farmerId, string category, DateTime? from, DateTime? to, decimal? minPrice = null, decimal? maxPrice = null)
         {
             var query = _context.Products
                 .Include(p => p.Farmer)
@@ -85,6 +85,16 @@ namespace AgriHub.Services
             if (to.HasValue)
             {
                 query = query.Where(p => p.ProductionDate <= to.Value);
+            }
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= maxPrice.Value);
             }
 
             return await query.ToListAsync();
@@ -114,6 +124,16 @@ namespace AgriHub.Services
             if (filter.FarmerId.HasValue)
             {
                 query = query.Where(p => p.FarmerId == filter.FarmerId.Value);
+            }
+
+            if (filter.MinPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= filter.MinPrice.Value);
+            }
+
+            if (filter.MaxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= filter.MaxPrice.Value);
             }
 
             // Get all farmers for the dropdown
