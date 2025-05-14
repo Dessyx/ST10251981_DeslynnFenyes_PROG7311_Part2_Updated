@@ -7,22 +7,22 @@
 
 <h1>Dashboard</h1>
 <div class="dashboard-cards" style="display: flex; gap: 2rem; justify-content: center; margin-bottom: 2rem;">
-    <div style="flex:1; background: linear-gradient(135deg, #a8e063, #56aaff); border-radius: 40px; padding: 4px;">
+    <div style="flex:1; background: linear-gradient(135deg, #59ec45, #56aaff); border-radius: 40px; padding: 4px;">
         <div style="background: #1c1c1d; border-radius: 36px; padding: 2rem; text-align: center; color: #fff;">
             <div style="font-size: 2rem; margin-bottom: 1rem;">Total Farmers</div>
-            <div style="font-size: 3rem; color: #c6ff6d;">@ViewBag.TotalFarmers</div>
+            <div style="font-size: 3rem; color: #59ec45;">@ViewBag.TotalFarmers</div>
         </div>
     </div>
-    <div style="flex:1; background: linear-gradient(135deg, #a8e063, #56aaff); border-radius: 40px; padding: 4px;">
+    <div style="flex:1; background: linear-gradient(135deg, #59ec45, #56aaff); border-radius: 40px; padding: 4px;">
         <div style="background: #1c1c1d; border-radius: 36px; padding: 2rem; text-align: center; color: #fff;">
             <div style="font-size: 2rem; margin-bottom: 1rem;">Total Products</div>
-            <div style="font-size: 3rem; color: #c6ff6d;">@ViewBag.TotalProducts</div>
+            <div style="font-size: 3rem; color: #59ec45;">@ViewBag.TotalProducts</div>
         </div>
     </div>
-    <div style="flex:1; background: linear-gradient(135deg, #a8e063, #56aaff); border-radius: 40px; padding: 4px;">
+    <div style="flex:1; background: linear-gradient(135deg, #59ec45, #56aaff); border-radius: 40px; padding: 4px;">
         <div style="background: #1c1c1d; border-radius: 36px; padding: 2rem; text-align: center; color: #fff;">
             <div style="font-size: 2rem; margin-bottom: 1rem;">Total Categories</div>
-            <div style="font-size: 3rem; color: #c6ff6d;">@ViewBag.TotalCategories</div>
+            <div style="font-size: 3rem; color: #59ec45;">@ViewBag.TotalCategories</div>
         </div>
     </div>
 </div>
@@ -30,8 +30,8 @@
 
 <h1>Farmers</h1>
 <div class="mb-3">
-    <a class="btn btn-success" asp-action="AddFarmer">Add New Farmer</a>
-    <a class="btn btn-primary" asp-controller="Product" asp-action="Filter">Filter Products</a>
+    <a class="btn btn-success" asp-action="AddFarmer" style="background-color: #7CFC98; color: #222; border-radius: 20px; border: none; font-weight: bold;">Add New Farmer</a>
+    <a class="btn btn-primary" asp-controller="Product" asp-action="Filter" style="background-color: #4fc3f7; color: #222; border-radius: 20px; border: none; font-weight: bold;">Filter Products</a>
 </div>
 
 <table class="styled-table">
