@@ -27,7 +27,7 @@ This project is a Agri-Energy Connect Platform built with ASP.NET Core MVC desig
 10. Open the package manager and type the command: Add-Migration InitialCreate
 11. Once the build succeeded, type the command: update-database
 12. In your SQL Server Object Explorer, refresh and it should be reflected. 
-13. On the top in the middle, double click the http button.
+13. On the top in the middle, double click the https button.
 14. The program will compile and you may use the program. 
 
 
@@ -47,3 +47,4 @@ This project is a Agri-Energy Connect Platform built with ASP.NET Core MVC desig
 - Farmers have the ability to add and view their products.
 - Employees can filter farmers and products effectively.
 
+GitHub Link: https://github.com/Dessyx/AgriHub 
