@@ -1,12 +1,12 @@
-# AgriHub
+# 🌱 AgriHub
 
-## DESCRIPTION
+## 📝 DESCRIPTION
 
-This project is a Agri-Energy Connect Platform built with ASP.NET Core MVC designe dto brudge the gap between the agricultural sector and green energy technology providers. It provides functionality to manage farmers, products, and categories, while offering a clean UI and dashboard with real-time statistics.
+This project is a Agri-Energy Connect Platform built with ASP.NET Core MVC designed to brudge the gap between the agricultural sector and green energy technology providers. It provides functionality to manage farmers, products, and categories, while offering a clean UI and dashboard with real-time statistics.
 
 
 
-## GETTING STARTED
+## 🎲 GETTING STARTED
 ### Prerequisites
 
 - Visual Studio 2022 or later
@@ -31,19 +31,19 @@ This project is a Agri-Energy Connect Platform built with ASP.NET Core MVC desig
 14. The program will compile and you may use the program. 
 
 
-## TECHNOLOGIES USED
+## 💡 TECHNOLOGIES USED
 
 - ASP.NET Core MVC: Framework for building the web application.
 - Entity Framework Core (EF Core): Used for database access and management.
 - SQL Server: (Local Database).
 - Languages: C#, HTML & CSS
 
-## FEATURES
+## 👾 FEATURES
 
-Role based authentication
-Employees can add farmer profiles specifying their name, email, contact number and password. 
-Farmers can then sign in with these credentials created by the employee.
-Dashboard feature to oversee farmers and products for Employees.
-Farmers have the ability to add and view their products.
-Employees can filter farmers and products effectively.
+- Role based authentication
+- Employees can add farmer profiles specifying their name, email, contact number and password. 
+- Farmers can then sign in with these credentials created by the employee.
+- Dashboard feature to oversee farmers and products for Employees.
+- Farmers have the ability to add and view their products.
+- Employees can filter farmers and products effectively.
 
