@@ -79,6 +79,93 @@ namespace AgriHub.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Farmer")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var farmer = await _farmerService.GetFarmerByUserIdAsync(user.Id);
+            
+            if (product.FarmerId != farmer.FarmerId)
+            {
+                return Unauthorized();
+            }
+
+            var model = new ProductViewModel
+            {
+                Name = product.Name,
+                Category = product.Category,
+                ProductionDate = product.ProductionDate,
+                Price = product.Price
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Farmer")]
+        public async Task<IActionResult> Edit(int id, ProductViewModel model)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var product = await _productService.GetProductByIdAsync(id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                var user = await _userManager.GetUserAsync(User);
+                var farmer = await _farmerService.GetFarmerByUserIdAsync(user.Id);
+                
+                if (product.FarmerId != farmer.FarmerId)
+                {
+                    return Unauthorized();
+                }
+
+                product.Name = model.Name;
+                product.Category = model.Category;
+                product.ProductionDate = model.ProductionDate;
+                product.Price = model.Price;
+
+                await _productService.UpdateProductAsync(product);
+                return RedirectToAction("MyProducts");
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Farmer")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var farmer = await _farmerService.GetFarmerByUserIdAsync(user.Id);
+            
+            if (product.FarmerId != farmer.FarmerId)
+            {
+                return Unauthorized();
+            }
+
+            await _productService.DeleteProductAsync(id);
+            return RedirectToAction("MyProducts");
+        }
+
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> AllProducts(string category, DateTime? from, DateTime? to, int? farmerId, decimal? minPrice, decimal? maxPrice)
         {
