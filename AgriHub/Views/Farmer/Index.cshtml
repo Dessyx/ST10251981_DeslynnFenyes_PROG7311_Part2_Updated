@@ -27,29 +27,234 @@
     </div>
 </div>
 
-
 <h1>Farmers</h1>
 <div class="mb-3">
     <a class="btn btn-success" asp-action="AddFarmer" style="background-color: #7CFC98; color: #222; border-radius: 20px; border: none; font-weight: bold;">Add New Farmer</a>
     <a class="btn btn-primary" asp-controller="Product" asp-action="Filter" style="background-color: #4fc3f7; color: #222; border-radius: 20px; border: none; font-weight: bold;">Filter Products</a>
 </div>
 
-<table class="styled-table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var farmer in Model)
-        {
-            <tr>
-                <td>@farmer.Name</td>
-                <td>@farmer.Email</td>
-                <td>@farmer.Phone</td>
-            </tr>
+<div style="display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap;">
+    <!-- Farmer filter + products table -->
+    <div style="flex: 2 1 350px; min-width: 300px; background: #18191c; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.10);">
+        <div style="margin-bottom: 1rem;">
+            <label for="farmerFilter" style="color:#fff; font-weight:bold; margin-right:8px;">Filter by Farmer:</label>
+            <select id="farmerFilter" style="border-radius: 10px; padding: 4px 12px; min-width: 180px;">
+                @foreach (var farmer in Model)
+                {
+                    <option value="@farmer.FarmerId">@farmer.Name</option>
+                }
+            </select>
+        </div>
+        <table class="styled-table" id="productsTable" style="width: 100%; min-width: 250px; max-width: 100%; background: #23242a; color: #fff;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Production Date</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Product rows will be inserted by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <!-- Pie chart -->
+    <div style="flex: 1 1 200px; min-width: 180px; background: #18191c; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.10); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h2 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">Product Categories</h2>
+        <canvas id="categoryPieChart" height="35" style="height:35px; width:100px; max-width:100%;"></canvas>
+    </div>
+    <!-- Farmers table -->
+    <div style="flex: 2 1 350px; min-width: 300px; background: #18191c; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.10);">
+        <h2 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">All Farmers</h2>
+        <table class="styled-table" id="farmersTable" style="width: 100%; min-width: 250px; max-width: 100%; cursor:pointer; background: #23242a; color: #fff;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var farmer in Model)
+                {
+                    <tr data-farmer-id="@farmer.FarmerId">
+                        <td>@farmer.Name</td>
+                        <td>@farmer.Email</td>
+                        <td>@farmer.Phone</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bottom row: stacked charts -->
+<div style="display: flex; flex-direction: column; gap: 2rem; margin-bottom: 2rem;">
+    <div style="background: #18191c; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.10);">
+        <h2 style="color: #fff;">Products Trend</h2>
+        <canvas id="productsTrendChart" height="80"></canvas>
+    </div>
+    <div style="background: #18191c; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.10);">
+        <h2 style="color: #fff;">Farmer Product Counts</h2>
+        <canvas id="farmersTrendChart" height="80"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Data from ViewBag
+        const farmerNames = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.FarmerNames));
+        const farmerProductCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.FarmerProductCounts));
+        const months = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthLabels));
+        const productCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ProductCounts));
+        const categoryLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.CategoryLabels));
+        const categoryCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.CategoryCounts));
+        const allProducts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+            ((IEnumerable<AgriHub.Models.Entities.Product>)ViewBag.AllProducts)
+            .Select(p => new {
+                productId = p.ProductId,
+                farmerId = p.FarmerId,
+                name = p.Name,
+                category = p.Category,
+                productionDate = p.ProductionDate,
+                price = p.Price
+            })
+        ));
+        const farmers = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Select(f => new { f.FarmerId, f.Name }))); // for mapping
+
+        // --- Farmer/Product Table Interactivity ---
+        const farmersTable = document.getElementById('farmersTable');
+        const productsTableBody = document.getElementById('productsTable').querySelector('tbody');
+        let selectedFarmerId = farmers[0]?.FarmerId;
+
+        function renderProductsTable(farmerId) {
+            productsTableBody.innerHTML = '';
+            const filtered = allProducts.filter(p => p.farmerId === farmerId);
+            if (filtered.length === 0) {
+                productsTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#aaa;">No products for this farmer.</td></tr>';
+            } else {
+                filtered.forEach(p => {
+                    productsTableBody.innerHTML += `<tr>
+                        <td>${p.name}</td>
+                        <td>${p.category}</td>
+                        <td>${new Date(p.productionDate).toLocaleDateString()}</td>
+                        <td>${p.price.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    </tr>`;
+                });
+            }
         }
-    </tbody>
-</table>
+
+        // Initial render
+        renderProductsTable(selectedFarmerId);
+        // Highlight first row
+        farmersTable.querySelector('tbody').rows[0]?.classList.add('selected');
+
+        // Row click event
+        Array.from(farmersTable.querySelectorAll('tbody tr')).forEach(row => {
+            row.addEventListener('click', function() {
+                Array.from(farmersTable.querySelectorAll('tbody tr')).forEach(r => r.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedFarmerId = parseInt(this.getAttribute('data-farmer-id'));
+                renderProductsTable(selectedFarmerId);
+            });
+        });
+
+        // --- Chart.js Graphs ---
+        // Farmer Product Counts (Bar Chart)
+        new Chart(document.getElementById('farmersTrendChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: farmerNames,
+                datasets: [{
+                    label: 'Products Added',
+                    data: farmerProductCounts,
+                    backgroundColor: '#59ec45',
+                    borderColor: '#59ec45',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: { legend: { labels: { color: '#fff' } } },
+                scales: {
+                    x: { ticks: { color: '#fff' }, grid: { color: '#333' } },
+                    y: { ticks: { color: '#fff' }, grid: { color: '#333' }, beginAtZero: true }
+                }
+            }
+        });
+
+        // Products Trend (Line Chart)
+        new Chart(document.getElementById('productsTrendChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Products',
+                    data: productCounts,
+                    borderColor: '#4fc3f7',
+                    backgroundColor: 'rgba(79,195,247,0.15)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                plugins: { legend: { labels: { color: '#fff' } } },
+                scales: {
+                    x: { ticks: { color: '#fff' }, grid: { color: '#333' } },
+                    y: { ticks: { color: '#fff' }, grid: { color: '#333' }, beginAtZero: true }
+                }
+            }
+        });
+
+        // Pie chart for categories
+        new Chart(document.getElementById('categoryPieChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    data: categoryCounts,
+                    backgroundColor: [
+                        '#59ec45', '#4fc3f7', '#ffb347', '#ff6666', '#a28cff', '#ffd700', '#00b894'
+                    ]
+                }]
+            },
+            options: {
+                plugins: { legend: { labels: { color: '#fff' } } }
+            }
+        });
+
+        // --- Farmer/Product Table Interactivity ---
+        const farmerFilter = document.getElementById('farmerFilter');
+        // Initial render
+        renderProductsTable(selectedFarmerId);
+        // Highlight first row
+        farmersTable.querySelector('tbody').rows[0]?.classList.add('selected');
+        // Set dropdown to first farmer
+        farmerFilter.value = selectedFarmerId;
+
+        // Row click event
+        Array.from(farmersTable.querySelectorAll('tbody tr')).forEach(row => {
+            row.addEventListener('click', function() {
+                Array.from(farmersTable.querySelectorAll('tbody tr')).forEach(r => r.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedFarmerId = parseInt(this.getAttribute('data-farmer-id'));
+                renderProductsTable(selectedFarmerId);
+                farmerFilter.value = selectedFarmerId;
+            });
+        });
+        // Dropdown change event
+        farmerFilter.addEventListener('change', function() {
+            selectedFarmerId = parseInt(this.value);
+            renderProductsTable(selectedFarmerId);
+            // Highlight the corresponding row
+            Array.from(farmersTable.querySelectorAll('tbody tr')).forEach(row => {
+                if (parseInt(row.getAttribute('data-farmer-id')) === selectedFarmerId) {
+                    row.classList.add('selected');
+                } else {
+                    row.classList.remove('selected');
+                }
+            });
+        });
+    </script>
+}

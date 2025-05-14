@@ -30,9 +30,48 @@ namespace AgriHub.Controllers
         public async Task<IActionResult> Index()
         {
             var farmers = await _farmerService.GetAllFarmersAsync();
+            var products = _context.Products.ToList();
             ViewBag.TotalFarmers = _context.Farmers.Count();
             ViewBag.TotalProducts = _context.Products.Count();
             ViewBag.TotalCategories = _context.Products.Select(p => p.Category).Distinct().Count();
+
+            // Farmer trend: Farmer names and their product counts
+            var farmerNames = _context.Farmers.Select(f => f.Name).ToList();
+            var farmerProductCounts = _context.Farmers
+                .Select(f => f.Products.Count)
+                .ToList();
+
+            // Product trend: Products added per month (last 6 months)
+            var now = DateTime.Now;
+            var months = Enumerable.Range(0, 6)
+                .Select(i => new DateTime(now.Year, now.Month, 1).AddMonths(-i))
+                .OrderBy(d => d)
+                .ToList();
+            var monthLabels = months.Select(m => m.ToString("MMM yyyy")).ToList();
+            var productCounts = months.Select(m =>
+                _context.Products.Count(p => p.ProductionDate.Month == m.Month && p.ProductionDate.Year == m.Year)
+            ).ToList();
+
+            // Category pie chart: Category names and product counts
+            var categoryData = _context.Products
+                .GroupBy(p => p.Category)
+                .Select(g => new { Category = g.Key, Count = g.Count() })
+                .ToList();
+            var categoryLabels = categoryData.Select(c => c.Category).ToList();
+            var categoryCounts = categoryData.Select(c => c.Count).ToList();
+
+            // Pass all products and a mapping of farmerId to their products
+            ViewBag.AllProducts = products;
+            ViewBag.FarmerIdToProducts = products.GroupBy(p => p.FarmerId)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            ViewBag.FarmerNames = farmerNames;
+            ViewBag.FarmerProductCounts = farmerProductCounts;
+            ViewBag.MonthLabels = monthLabels;
+            ViewBag.ProductCounts = productCounts;
+            ViewBag.CategoryLabels = categoryLabels;
+            ViewBag.CategoryCounts = categoryCounts;
+
             return View(farmers);
         }
 
