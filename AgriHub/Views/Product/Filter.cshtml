@@ -5,10 +5,60 @@
 <a asp-controller="Farmer" asp-action="Index" class="btn btn-outline-secondary" style="position: absolute; top: 20px; left: 20px; z-index: 10;">&larr; Back</a>
 <link rel="stylesheet" href="~/css/Dashboard.css" />
 
+<style>
+    .filter-card-dark {
+        background: #23242a !important;
+        color: #fff !important;
+        border-radius: 20px;
+        border: none;
+    }
+    .filter-card-dark label,
+    .filter-card-dark .control-label,
+    .filter-card-dark .form-group label,
+    .filter-card-dark .form-control,
+    .filter-card-dark select,
+    .filter-card-dark input,
+    .filter-card-dark option {
+        color: #fff !important;
+    }
+    .filter-card-dark .form-control,
+    .filter-card-dark select,
+    .filter-card-dark input[type='date'],
+    .filter-card-dark input[type='number'] {
+        background: rgba(34,34,34,0.7) !important;
+        color: #fff !important;
+        border: 1px solid #fff;
+        /* For date picker icon */
+        color-scheme: dark;
+    }
+    .filter-card-dark .btn-primary {
+        background: #59ec45;
+        color: #111;
+        border-radius: 20px;
+        border: none;
+        font-weight: bold;
+    }
+    .filter-card-dark .btn-primary:hover {
+        background: #4bbf3b;
+        color: #111;
+    }
+    .filter-card-dark .btn-secondary {
+        background: transparent;
+        color: #fff;
+        border-radius: 20px;
+        border: 1px solid #fff;
+        font-weight: bold;
+    }
+    .filter-card-dark .btn-secondary:hover {
+        background: #444;
+        color: #fff;
+    }
+</style>
+
 <div class="container">
     <h1>Filter Products</h1>
 
-    <div class="card mb-4">
+    <div class="card mb-4 filter-card-dark">
         <div class="card-body">
             <form asp-action="Filter" method="get">
                 <div class="row">

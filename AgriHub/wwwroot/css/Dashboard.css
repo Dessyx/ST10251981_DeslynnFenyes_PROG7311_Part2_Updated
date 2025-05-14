@@ -56,3 +56,36 @@ h1 {
     .styled-table th {
         text-align: left;
     }
+
+
+.filter-card-green {
+    background: #59ec45 !important;
+    color: #fff !important;
+    border-radius: 20px;
+    border: none;
+}
+
+    .filter-card-green label,
+    .filter-card-green .control-label,
+    .filter-card-green .form-group label,
+    .filter-card-green .form-control,
+    .filter-card-green select,
+    .filter-card-green input,
+    .filter-card-green option {
+        color: #fff !important;
+    }
+
+        .filter-card-green .form-control,
+        .filter-card-green select,
+        .filter-card-green input[type='date'],
+        .filter-card-green input[type='number'] {
+            background: rgba(34,34,34,0.7) !important;
+            color: #fff !important;
+            border: 1px solid #fff;
+        }
+
+    .filter-card-green .btn-primary,
+    .filter-card-green .btn-secondary {
+        border-radius: 20px;
+        font-weight: bold;
+    }
