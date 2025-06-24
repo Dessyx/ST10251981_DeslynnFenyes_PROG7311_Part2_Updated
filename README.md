@@ -94,4 +94,4 @@ Built using modern web development practices with ASP.NET Core MVC, the platform
 
 ## 🔗 LINKS
 
-- **GitHub Repository**: https://github.com/Dessyx/ST10251981_DeslynnFenyes_PROG7311_Part2_Updated
+- **GitHub Repository**: https://github.com/VCCT-PROG3A-2025-G1/ST10251981_DeslynnFenyes_PROG7311_Part2_Updated/tree/master
