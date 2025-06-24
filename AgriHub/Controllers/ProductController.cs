@@ -73,6 +73,7 @@ namespace AgriHub.Controllers
                         Category = model.Category,
                         ProductionDate = model.ProductionDate,
                         Price = model.Price,
+                        ImageUrl = model.ImageUrl,
                         FarmerId = farmer.FarmerId
                     };
 
@@ -111,7 +112,8 @@ namespace AgriHub.Controllers
                 Name = product.Name,
                 Category = product.Category,
                 ProductionDate = product.ProductionDate,
-                Price = product.Price
+                Price = product.Price,
+                ImageUrl = product.ImageUrl
             };
 
             return View(model);
@@ -148,6 +150,7 @@ namespace AgriHub.Controllers
                 product.Category = model.Category;
                 product.ProductionDate = model.ProductionDate;
                 product.Price = model.Price;
+                product.ImageUrl = model.ImageUrl;
 
                 await _productService.UpdateProductAsync(product);
                 return RedirectToAction("MyProducts");

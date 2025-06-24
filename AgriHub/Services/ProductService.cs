@@ -154,6 +154,39 @@ namespace AgriHub.Services
                 query = query.Where(p => p.Price <= filter.MaxPrice.Value);
             }
 
+        
+            if (!string.IsNullOrWhiteSpace(filter.SortBy))
+            {
+                switch (filter.SortBy.ToLower())
+                {
+                    case "price_low_to_high":
+                        query = query.OrderBy(p => p.Price);
+                        break;
+                    case "price_high_to_low":
+                        query = query.OrderByDescending(p => p.Price);
+                        break;
+                    case "name_a_to_z":
+                        query = query.OrderBy(p => p.Name);
+                        break;
+                    case "name_z_to_a":
+                        query = query.OrderByDescending(p => p.Name);
+                        break;
+                    case "popularity":
+                       
+                        query = query.OrderByDescending(p => p.ProductionDate);
+                        break;
+                    default:
+                       
+                        query = query.OrderBy(p => p.Name);
+                        break;
+                }
+            }
+            else
+            {
+                // Default 
+                query = query.OrderBy(p => p.Name);
+            }
+
             // Get all farmers for the dropdown
             filter.Farmers = await _context.Farmers.ToListAsync();
             

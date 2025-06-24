@@ -35,6 +35,14 @@
                     <span asp-validation-for="Category" class="text-danger"></span>
                     <input asp-for="Category" class="form-control" placeholder="Enter category" />
                 </div>
+
+                <!-- Product Image URL -->
+                <div class="form-group">
+                    <label asp-for="ImageUrl">Product Image URL</label>
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL (optional)" />
+                    <small class="form-text text-muted">Enter a URL to an image of your product (optional)</small>
+                </div>
             </div>
 
             <div class="right-column">

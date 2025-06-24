@@ -27,6 +27,10 @@ namespace AgriHub.Models.Entities
         [Display(Name = "Price")]
         public decimal Price { get; set; }
 
+        [Display(Name = "Product Image")]
+        [StringLength(500, ErrorMessage = "Image URL cannot be longer than 500 characters")]
+        public string? ImageUrl { get; set; }
+
         public Farmer Farmer { get; set; }
     }
 }

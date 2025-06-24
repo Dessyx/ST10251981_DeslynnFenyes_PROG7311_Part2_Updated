@@ -25,6 +25,9 @@ namespace AgriHub.Models
         [Display(Name = "Max Price")]
         public decimal? MaxPrice { get; set; }
 
+        [Display(Name = "Sort By")]
+        public string? SortBy { get; set; }
+
         public IEnumerable<Product> Products { get; set; } = new List<Product>();
         public IEnumerable<Farmer> Farmers { get; set; } = new List<Farmer>();
         public IEnumerable<string> AvailableCategories { get; set; } = new List<string>();
